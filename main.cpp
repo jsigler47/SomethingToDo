@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cctype>
 
 struct Task{
 	std::string text;
@@ -13,6 +14,7 @@ int main(){
 
 	struct Task* head = NULL;
 	bool running = true;
+	int numTasks = 0;
 	while(running){
 
 		std::cout << "Commands:\n\"A\": Add Task\n\"R\": Remove Task";
@@ -37,14 +39,23 @@ int main(){
 				std::getline(std::cin, task);
 				head = addTask(task, head);
 				std::cout << "\nSuccessfully added " << task << "!\n" << std::endl;
+				numTasks++;
 				break;
 			}
 			case 'R': {
-				int index;
+				int index = 0;
 				std::cout << "Input task number to remove: ";
 				getline(std::cin, input);
-				index = std::stoi(input);
-				head = removeTask(index, head);
+				if(isdigit(input[0])){
+					index = std::stoi(input);
+					if(index >= 1 && index <= numTasks)
+						head = removeTask(index, head);
+				}
+				else{
+					std::cout << "\nError: Invalid task number.\n" << std::endl;
+					break;
+				}
+				
 				std::cout << "\nSuccessfully removed task #" << index << "!\n" << std::endl;
 				break;
 			}
