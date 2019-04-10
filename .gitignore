@@ -1,3 +1,5 @@
 #Ingore the compiled program
 main
+#Ignore test data and save files
 tests.txt
+.tasks
